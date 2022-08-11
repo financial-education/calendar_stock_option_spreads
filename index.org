@@ -1,0 +1,10 @@
+#+title: Calendar Stock Option Spreads
+#+author: Matt Brigida, Ph.D.
+#+SETUPFILE: https://fniessen.github.io/org-html-themes/org/theme-readtheorg.setup
+#+HTML_HEAD: <style>pre.src{background:#343131;color:white;} </style>
+
+#+begin_comment
+Pull data from IB because we need bid/ask and not last trade.
+#+end_comment
+
+In this type of spread we initiate positions in options which expire on different dates.
