@@ -7,4 +7,8 @@
 Pull data from IB because we need bid/ask and not last trade.
 #+end_comment
 
-In this type of spread we initiate positions in options which expire on different dates.
+In this type of spread we initiate positions in options which expire on
+different dates.  For example, say we sell a 50 call expiring in a month, and
+buy a 50 call expiring in 2 months.  We know this will be a debit
+spread---net we will have to pay because the longer-dated call will have a
+higher price.
