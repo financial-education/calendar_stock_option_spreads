@@ -12,3 +12,13 @@ different dates.  For example, say we sell a 50 call expiring in a month, and
 buy a 50 call expiring in 2 months.  We know this will be a debit
 spread---net we will have to pay because the longer-dated call will have a
 higher price.
+
+Let's assume:
+
+|            | Strike | Premium | Expiration |
+|------------+--------+---------+------------|
+| Long Call  |     50 | $1.27   | 1 month    |
+| Short Call |     50 | $1.98   | 2 months   |
+|------------+--------+---------+------------|
+
+The premia were determined using the Black-Scholes model with a constant volatility of 30%, a 1% risk free rate, and a $49 stock price.
