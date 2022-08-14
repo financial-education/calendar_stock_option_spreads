@@ -15,10 +15,18 @@ higher price.
 
 Let's assume:
 
-|            | Strike | Premium | Expiration |
-|------------+--------+---------+------------|
-| Long Call  |     50 | $1.27   | 1 month    |
-| Short Call |     50 | $1.98   | 2 months   |
-|------------+--------+---------+------------|
+|             | Strike | Premium | Expiration |
+|-------------+--------+---------+------------|
+| Call Sold   |     50 | $1.27   | 1 month    |
+| Call Bought |     50 | $1.98   | 2 months   |
+|-------------+--------+---------+------------|
 
-The premia were determined using the Black-Scholes model with a constant volatility of 30%, a 1% risk free rate, and a $49 stock price.
+The premia were determined using the Black-Scholes model with a constant volatility of 30%, a 1% risk free rate, and a $49 stock price.  Implementing the spread gives us a cash flow of $1.27 - $1.98 = -$0.71 today.
+
+Let's calculate the profit on the spread when the shorter-dated option expires (1 month), assuming we sell the longer-dated option on that date.  Also assume volatility stays constant.  We assume we sell the longer-dated call at the Black-Scholes value of the call.
+
+What if volatility increases?
+
+Buying the longer-dated call => long volatility.
+
+What if volatility increases?
