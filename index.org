@@ -82,7 +82,7 @@ fig.write_html("./figs/profit_same_vol.html")
 : None
 
 #+begin_export html
-<iframe src="./figs/profit_same_vol.html" width="100%" height="600" style="border:none;">
+<iframe src="./figs/profit_same_vol.html" width="100%" height="100%" style="border:none;">
 </iframe>
 #+end_export
 
