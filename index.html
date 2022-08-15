@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-08-11 Thu 10:36 -->
+<!-- 2022-08-15 Mon 12:41 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Calendar Stock Option Spreads</title>
@@ -20,13 +20,161 @@
 <body>
 <div id="content" class="content">
 <h1 class="title">Calendar Stock Option Spreads</h1>
+<div id="table-of-contents" role="doc-toc">
+<h2>Table of Contents</h2>
+<div id="text-table-of-contents" role="doc-toc">
+<ul>
+<li><a href="#org4dc4917">1. Sell Short-Dated and Buy Long</a>
+<ul>
+<li><a href="#org3ddb67d">1.1. What if volatility increases?</a></li>
+<li><a href="#orgc8890af">1.2. What if volatility decreases?</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</div>
+
+<div id="outline-container-org4dc4917" class="outline-2">
+<h2 id="org4dc4917"><span class="section-number-2">1.</span> Sell Short-Dated and Buy Long</h2>
+<div class="outline-text-2" id="text-1">
 <p>
-In this type of spread we initiate positions in options which expire on different dates.
+In this type of spread we initiate positions in options which expire on
+different dates.  For example, say we sell a 50 call expiring in a month, and
+buy a 50 call expiring in 2 months.  We know this will be a debit
+spread&#x2014;net we will have to pay because the longer-dated call will have a
+higher price.
 </p>
+
+<p>
+Let's assume:
+</p>
+
+<table border="2" cellspacing="0" cellpadding="6" rules="groups" frame="hsides">
+
+
+<colgroup>
+<col  class="org-left" />
+
+<col  class="org-right" />
+
+<col  class="org-left" />
+
+<col  class="org-left" />
+</colgroup>
+<thead>
+<tr>
+<th scope="col" class="org-left">&#xa0;</th>
+<th scope="col" class="org-right">Strike</th>
+<th scope="col" class="org-left">Premium</th>
+<th scope="col" class="org-left">Expiration</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td class="org-left">Call Sold</td>
+<td class="org-right">50</td>
+<td class="org-left">$1.27</td>
+<td class="org-left">1 month</td>
+</tr>
+
+<tr>
+<td class="org-left">Call Bought</td>
+<td class="org-right">50</td>
+<td class="org-left">$1.98</td>
+<td class="org-left">2 months</td>
+</tr>
+</tbody>
+</table>
+
+<p>
+The premia were determined using the Black-Scholes model with a constant volatility of 30%, a 1% risk free rate, and a $49 stock price.  Implementing the spread gives us a cash flow of $1.27 - $1.98 = -$0.71 today.
+</p>
+
+<p>
+Let's calculate the profit on the spread when the shorter-dated option expires (1 month), assuming we sell the longer-dated option on that date.  Also assume volatility stays constant.  We assume we sell the longer-dated call at the Black-Scholes value of the call.
+</p>
+
+<p>
+To do this let's load a function that will calculate the Black-Scholes call option value into a Python session.
+</p>
+
+<p>
+Load required libraries:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F92660;">import</span> numpy <span style="color: #F92660;">as</span> np
+<span style="color: #F92660;">from</span> scipy.stats <span style="color: #F92660;">import</span> norm
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F92660;">def</span> <span style="color: #A6E22E;">black_scholes_call</span>(stock, strike, risk_free, vol, time):
+    <span style="color: #F8F8F2;">d1</span> = (np.log(stock / strike) + (risk_free + vol * vol / 2) * time) / (vol * np.sqrt(time))
+    <span style="color: #F8F8F2;">d2</span> = d1 - vol * np.sqrt(time)
+    <span style="color: #F8F8F2;">call</span> = stock * norm.cdf(d1) - strike * np.exp(-risk_free * time) * norm.cdf(d2)
+    <span style="color: #F92660;">return</span>(<span style="color: #FD971F;">round</span>(call, 2))
+</pre>
+</div>
+
+<p>
+We can now create a function to value our calendar spread, and apply it to various underlying stock prices using a list comprehension:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F92660;">def</span> <span style="color: #A6E22E;">calendar_spread_1</span>(stock):
+    <span style="color: #F8F8F2;">profit_call_bought</span> = black_scholes_call(stock, 50, .01, .3, 1/12) - 1.98
+    <span style="color: #F8F8F2;">profit_call_sold</span> = 1.27 - <span style="color: #FD971F;">max</span>(stock - 50, 0)
+    <span style="color: #F8F8F2;">total_profit</span> = profit_call_bought + profit_call_sold
+    <span style="color: #F92660;">return</span>(<span style="color: #FD971F;">round</span>(total_profit, 2))
+</pre>
+</div>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F8F8F2;">profit_1_same_vol</span> = [calendar_spread_1(x) <span style="color: #F92660;">for</span> x <span style="color: #F92660;">in</span> <span style="color: #FD971F;">range</span>(30, 70)]
+</pre>
+</div>
+
+<p>
+Plot the spread profit:
+</p>
+
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F92660;">import</span> plotly.express <span style="color: #F92660;">as</span> px
+
+<span style="color: #F8F8F2;">fig</span> = px.line(x = <span style="color: #FD971F;">range</span>(30, 70), y = profit_1_same_vol, template=<span style="color: #E6DB74;">'plotly_dark'</span>, title=<span style="color: #E6DB74;">"Profit on Calendar Spread (Constant Volatility)"</span>).update_layout(
+    xaxis_title=<span style="color: #E6DB74;">"Stock Price"</span>, yaxis_title=<span style="color: #E6DB74;">"Spread Profit"</span>
+)
+
+fig.write_html(<span style="color: #E6DB74;">"./figs/profit_same_vol.html"</span>)
+</pre>
+</div>
+
+<iframe src="./figs/profit_same_vol.html" width="100%" height="600" style="border:none;">
+</iframe>
+
+<p>
+Note this resembles the profit on a butterfly, except the transition to the max loss has curvature.
+</p>
+</div>
+
+<div id="outline-container-org3ddb67d" class="outline-3">
+<h3 id="org3ddb67d"><span class="section-number-3">1.1.</span> What if volatility increases?</h3>
+<div class="outline-text-3" id="text-1-1">
+<p>
+Buying the longer-dated call =&gt; long volatility.
+</p>
+</div>
+</div>
+
+<div id="outline-container-orgc8890af" class="outline-3">
+<h3 id="orgc8890af"><span class="section-number-3">1.2.</span> What if volatility decreases?</h3>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2022-08-11 Thu 10:36</p>
+<p class="date">Created: 2022-08-15 Mon 12:41</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

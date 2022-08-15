@@ -52,15 +52,41 @@ We can now create a function to value our calendar spread, and apply it to vario
 
 #+begin_src python :session *calendar_spreads*
 def calendar_spread_1(stock):
-    profit_call_bought =
-    profit_call_sold =
+    profit_call_bought = black_scholes_call(stock, 50, .01, .3, 1/12) - 1.98
+    profit_call_sold = 1.27 - max(stock - 50, 0)
     total_profit = profit_call_bought + profit_call_sold
     return(round(total_profit, 2))
 #+end_src
 
 #+RESULTS:
-: range(30, 70)
 
+#+begin_src python :session *calendar_spreads*
+profit_1_same_vol = [calendar_spread_1(x) for x in range(30, 70)]
+#+end_src
+
+#+RESULTS:
+
+Plot the spread profit:
+
+#+begin_src python :session *calendar_spreads*
+import plotly.express as px
+
+fig = px.line(x = range(30, 70), y = profit_1_same_vol, template='plotly_dark', title="Profit on Calendar Spread (Constant Volatility)").update_layout(
+    xaxis_title="Stock Price", yaxis_title="Spread Profit"
+)
+
+fig.write_html("./figs/profit_same_vol.html")
+#+end_src
+
+#+RESULTS:
+: None
+
+#+begin_export html
+<iframe src="./figs/profit_same_vol.html" width="100%" height="600" style="border:none;">
+</iframe>
+#+end_export
+
+Note this resembles the profit on a butterfly, except the transition to the max loss has curvature.
 
 ** What if volatility increases?
 
