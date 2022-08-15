@@ -7,6 +7,8 @@
 Pull data from IB because we need bid/ask and not last trade.
 #+end_comment
 
+* Sell Short-Dated and Buy Long
+
 In this type of spread we initiate positions in options which expire on
 different dates.  For example, say we sell a 50 call expiring in a month, and
 buy a 50 call expiring in 2 months.  We know this will be a debit
@@ -25,8 +27,43 @@ The premia were determined using the Black-Scholes model with a constant volatil
 
 Let's calculate the profit on the spread when the shorter-dated option expires (1 month), assuming we sell the longer-dated option on that date.  Also assume volatility stays constant.  We assume we sell the longer-dated call at the Black-Scholes value of the call.
 
-What if volatility increases?
+To do this let's load a function that will calculate the Black-Scholes call option value into a Python session.
+
+Load required libraries:
+
+#+begin_src python :session *calendar_spreads*
+import numpy as np
+from scipy.stats import norm
+#+end_src
+
+#+RESULTS:
+
+#+begin_src python :session *calendar_spreads*
+def black_scholes_call(stock, strike, risk_free, vol, time):
+    d1 = (np.log(stock / strike) + (risk_free + vol * vol / 2) * time) / (vol * np.sqrt(time))
+    d2 = d1 - vol * np.sqrt(time)
+    call = stock * norm.cdf(d1) - strike * np.exp(-risk_free * time) * norm.cdf(d2)
+    return(round(call, 2))
+#+end_src
+
+#+RESULTS:
+
+We can now create a function to value our calendar spread, and apply it to various underlying stock prices using a list comprehension:
+
+#+begin_src python :session *calendar_spreads*
+def calendar_spread_1(stock):
+    profit_call_bought =
+    profit_call_sold =
+    total_profit = profit_call_bought + profit_call_sold
+    return(round(total_profit, 2))
+#+end_src
+
+#+RESULTS:
+: range(30, 70)
+
+
+** What if volatility increases?
 
 Buying the longer-dated call => long volatility.
 
-What if volatility increases?
+** What if volatility decreases?
