@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-08-15 Mon 20:18 -->
+<!-- 2022-08-15 Mon 20:44 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Calendar Stock Option Spreads</title>
@@ -24,20 +24,21 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org193ba57">1. Sell Short-Dated and Buy Long</a>
+<li><a href="#orga0bcb4c">1. Sell Short-Dated and Buy Long</a>
 <ul>
-<li><a href="#org087202e">1.1. What if volatility increases?</a></li>
-<li><a href="#orgb79be1e">1.2. What if volatility decreases?</a></li>
-<li><a href="#org6d0a889">1.3. Most Realistic: Taking into Account the Leverage Effect</a></li>
-<li><a href="#orgdeb43f9">1.4. Leverage Effect: Larger Volatility Range</a></li>
+<li><a href="#orgcaee470">1.1. What if volatility increases?</a></li>
+<li><a href="#orgdfe448c">1.2. What if volatility decreases?</a></li>
+<li><a href="#orgdc10d97">1.3. Most Realistic: Taking into Account the Leverage Effect</a></li>
+<li><a href="#orgdbbd54f">1.4. Leverage Effect: Larger Volatility Range</a></li>
 </ul>
 </li>
+<li><a href="#orgdb441c9">2. Buy Short-Dated and Sell Long</a></li>
 </ul>
 </div>
 </div>
 
-<div id="outline-container-org193ba57" class="outline-2">
-<h2 id="org193ba57"><span class="section-number-2">1.</span> Sell Short-Dated and Buy Long</h2>
+<div id="outline-container-orga0bcb4c" class="outline-2">
+<h2 id="orga0bcb4c"><span class="section-number-2">1.</span> Sell Short-Dated and Buy Long</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In this type of spread we initiate positions in options which expire on
@@ -166,8 +167,8 @@ This is how the calendar spread is defined in textbooks, however it is not parti
 </p>
 </div>
 
-<div id="outline-container-org087202e" class="outline-3">
-<h3 id="org087202e"><span class="section-number-3">1.1.</span> What if volatility increases?</h3>
+<div id="outline-container-orgcaee470" class="outline-3">
+<h3 id="orgcaee470"><span class="section-number-3">1.1.</span> What if volatility increases?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 Buying the longer-dated call =&gt; long volatility.
@@ -192,8 +193,8 @@ fig2.write_html(<span style="color: #E6DB74;">"./figs/profit_vol_increase.html"<
 </div>
 
 
-<div id="outline-container-orgb79be1e" class="outline-3">
-<h3 id="orgb79be1e"><span class="section-number-3">1.2.</span> What if volatility decreases?</h3>
+<div id="outline-container-orgdfe448c" class="outline-3">
+<h3 id="orgdfe448c"><span class="section-number-3">1.2.</span> What if volatility decreases?</h3>
 <div class="outline-text-3" id="text-1-2">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #F8F8F2;">profit_1_decrease_vol</span> = [calendar_spread_1(x, 0.1) <span style="color: #F92660;">for</span> x <span style="color: #F92660;">in</span> <span style="color: #FD971F;">range</span>(30, 70)]
@@ -214,8 +215,8 @@ fig3.write_html(<span style="color: #E6DB74;">"./figs/profit_vol_decrease.html"<
 </div>
 
 
-<div id="outline-container-org6d0a889" class="outline-3">
-<h3 id="org6d0a889"><span class="section-number-3">1.3.</span> Most Realistic: Taking into Account the Leverage Effect</h3>
+<div id="outline-container-orgdc10d97" class="outline-3">
+<h3 id="orgdc10d97"><span class="section-number-3">1.3.</span> Most Realistic: Taking into Account the Leverage Effect</h3>
 <div class="outline-text-3" id="text-1-3">
 <div class="org-src-container">
 <pre class="src src-python"><span style="color: #F92660;">import</span> numpy
@@ -241,13 +242,15 @@ fig4.write_html(<span style="color: #E6DB74;">"./figs/profit_vol_leverage.html"<
 </div>
 
 
-<div id="outline-container-orgdeb43f9" class="outline-3">
-<h3 id="orgdeb43f9"><span class="section-number-3">1.4.</span> Leverage Effect: Larger Volatility Range</h3>
+<div id="outline-container-orgdbbd54f" class="outline-3">
+<h3 id="orgdbbd54f"><span class="section-number-3">1.4.</span> Leverage Effect: Larger Volatility Range</h3>
 <div class="outline-text-3" id="text-1-4">
-<div class="org-src-container">
-<pre class="src src-python"><span style="color: #F92660;">import</span> numpy
+<p>
+Let's increase the volatility range to 90% if the stock is 30, and 10% if the stock is 70.  This will make the shape of the spread more apparent, though the ranges are not particularly realistic (though still possible).
+</p>
 
-<span style="color: #F8F8F2;">stock_prices</span> = <span style="color: #FD971F;">range</span>(30, 70)
+<div class="org-src-container">
+<pre class="src src-python"><span style="color: #F8F8F2;">stock_prices</span> = <span style="color: #FD971F;">range</span>(30, 70)
 <span style="color: #F8F8F2;">volatilities</span> = numpy.linspace(.9, .1, num=40)
 
 profit_1_leverage2_vol = [calendar_spread_1(x, y) <span style="color: #F92660;">for</span> x, y <span style="color: #F92660;">in</span> <span style="color: #FD971F;">zip</span>(stock_prices, volatilities)]
@@ -267,10 +270,19 @@ fig5.write_html(<span style="color: #E6DB74;">"./figs/profit_vol_leverage2.html"
 </div>
 </div>
 </div>
+
+<div id="outline-container-orgdb441c9" class="outline-2">
+<h2 id="orgdb441c9"><span class="section-number-2">2.</span> Buy Short-Dated and Sell Long</h2>
+<div class="outline-text-2" id="text-2">
+<p>
+Flip the charts about the x axis.  
+</p>
+</div>
+</div>
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2022-08-15 Mon 20:18</p>
+<p class="date">Created: 2022-08-15 Mon 20:44</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>

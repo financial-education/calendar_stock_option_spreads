@@ -170,6 +170,8 @@ fig4.write_html("./figs/profit_vol_leverage.html")
 
 ** Leverage Effect: Larger Volatility Range
 
+Let's increase the volatility range to 90% if the stock is 30, and 10% if the stock is 70.  This will make the shape of the spread more apparent, though the ranges are not particularly realistic (though still possible).
+
 #+begin_src python :session *calendar_spreads*
 stock_prices = range(30, 70)
 volatilities = numpy.linspace(.9, .1, num=40)
@@ -193,3 +195,6 @@ fig5.write_html("./figs/profit_vol_leverage2.html")
 </iframe>
 #+end_export
 
+* Buy Short-Dated and Sell Long
+
+Flip the charts about the x axis.  
