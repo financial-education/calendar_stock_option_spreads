@@ -51,8 +51,8 @@ def black_scholes_call(stock, strike, risk_free, vol, time):
 We can now create a function to value our calendar spread, and apply it to various underlying stock prices using a list comprehension:
 
 #+begin_src python :session *calendar_spreads*
-def calendar_spread_1(stock):
-    profit_call_bought = black_scholes_call(stock, 50, .01, .3, 1/12) - 1.98
+def calendar_spread_1(stock, vol):
+    profit_call_bought = black_scholes_call(stock, 50, .01, vol, 1/12) - 1.98
     profit_call_sold = 1.27 - max(stock - 50, 0)
     total_profit = profit_call_bought + profit_call_sold
     return(round(total_profit, 2))
@@ -61,7 +61,7 @@ def calendar_spread_1(stock):
 #+RESULTS:
 
 #+begin_src python :session *calendar_spreads*
-profit_1_same_vol = [calendar_spread_1(x) for x in range(30, 70)]
+profit_1_same_vol = [calendar_spread_1(x, 0.3) for x in range(30, 70)]
 #+end_src
 
 #+RESULTS:
@@ -75,6 +75,8 @@ fig = px.line(x = range(30, 70), y = profit_1_same_vol, template='plotly_dark', 
     xaxis_title="Stock Price", yaxis_title="Spread Profit"
 )
 
+fig.add_hline(y=0)
+
 fig.write_html("./figs/profit_same_vol.html")
 #+end_src
 
@@ -82,14 +84,112 @@ fig.write_html("./figs/profit_same_vol.html")
 : None
 
 #+begin_export html
-<iframe src="./figs/profit_same_vol.html" width="100%" height="100%" style="border:none;">
+<iframe src="./figs/profit_same_vol.html" width="100%" height="400" style="border:none;">
 </iframe>
 #+end_export
 
 Note this resembles the profit on a butterfly, except the transition to the max loss has curvature.
 
+This is how the calendar spread is defined in textbooks, however it is not particularly realistic.  Stock volatility is not constant, and will likely change.  In the next few plots we'll look at the spread profit when volatility increases and decreases.  Last, we'll look at the most realistic scenario: volatility decreases of the stock price increases, and volatility increases if the stock price decreases (known as the leverage effect).
+
 ** What if volatility increases?
 
 Buying the longer-dated call => long volatility.
 
+#+begin_src python :session *calendar_spreads*
+profit_1_increase_vol = [calendar_spread_1(x, 0.5) for x in range(30, 70)]
+
+fig2 = px.line(x = range(30, 70), y = profit_1_increase_vol, template='plotly_dark', title="Profit on Calendar Spread (Increases Volatility)").update_layout(
+    xaxis_title="Stock Price", yaxis_title="Spread Profit"
+)
+
+fig2.add_hline(y=0)
+
+fig2.write_html("./figs/profit_vol_increase.html")
+#+end_src
+
+#+RESULTS:
+: None
+
+#+begin_export html
+<iframe src="./figs/profit_vol_increase.html" width="100%" height="400" style="border:none;">
+</iframe>
+#+end_export
+
+
 ** What if volatility decreases?
+
+#+begin_src python :session *calendar_spreads*
+profit_1_decrease_vol = [calendar_spread_1(x, 0.1) for x in range(30, 70)]
+
+fig3 = px.line(x = range(30, 70), y = profit_1_decrease_vol, template='plotly_dark', title="Profit on Calendar Spread (Decreases Volatility)").update_layout(
+    xaxis_title="Stock Price", yaxis_title="Spread Profit"
+)
+
+fig3.add_hline(y=0)
+
+fig3.write_html("./figs/profit_vol_decrease.html")
+#+end_src
+
+#+RESULTS:
+: None
+
+#+begin_export html
+<iframe src="./figs/profit_vol_decrease.html" width="100%" height="400" style="border:none;">
+</iframe>
+#+end_export
+
+
+** Most Realistic: Taking into Account the Leverage Effect
+
+#+begin_src python :session *calendar_spreads*
+import numpy
+
+stock_prices = range(30, 70)
+volatilities = numpy.linspace(.5, .1, num=40)
+
+profit_1_leverage_vol = [calendar_spread_1(x, y) for x, y in zip(stock_prices, volatilities)]
+
+fig4 = px.line(x = range(30, 70), y = profit_1_leverage_vol, template='plotly_dark', title="Profit on Calendar Spread (Leverage Effect)").update_layout(
+    xaxis_title="Stock Price", yaxis_title="Spread Profit"
+)
+
+fig4.add_hline(y=0)
+
+fig4.write_html("./figs/profit_vol_leverage.html")
+#+end_src
+
+#+RESULTS:
+: None
+
+#+begin_export html
+<iframe src="./figs/profit_vol_leverage.html" width="100%" height="400" style="border:none;">
+</iframe>
+#+end_export
+
+
+** Leverage Effect: Larger Volatility Range
+
+#+begin_src python :session *calendar_spreads*
+stock_prices = range(30, 70)
+volatilities = numpy.linspace(.9, .1, num=40)
+
+profit_1_leverage2_vol = [calendar_spread_1(x, y) for x, y in zip(stock_prices, volatilities)]
+
+fig5 = px.line(x = range(30, 70), y = profit_1_leverage2_vol, template='plotly_dark', title="Profit on Calendar Spread (Larger Leverage Effect)").update_layout(
+    xaxis_title="Stock Price", yaxis_title="Spread Profit"
+)
+
+fig5.add_hline(y=0)
+
+fig5.write_html("./figs/profit_vol_leverage2.html")
+#+end_src
+
+#+RESULTS:
+: None
+
+#+begin_export html
+<iframe src="./figs/profit_vol_leverage2.html" width="100%" height="400" style="border:none;">
+</iframe>
+#+end_export
+
