@@ -7,7 +7,7 @@
 Pull data from IB because we need bid/ask and not last trade.
 #+end_comment
 
-* Sell Short-Dated and Buy Long
+* Calls: Sell Short-Dated and Buy Long
 
 In this type of spread we initiate positions in options which expire on
 different dates.  For example, say we sell a 50 call expiring in a month, and
@@ -17,6 +17,8 @@ higher price.
 
 Let's assume:
 
+#+title: Call options in spread
+|-------------+--------+---------+------------|
 |             | Strike | Premium | Expiration |
 |-------------+--------+---------+------------|
 | Call Sold   |     50 | $1.27   | 1 month    |
@@ -94,7 +96,7 @@ This is how the calendar spread is defined in textbooks, however it is not parti
 
 ** What if volatility increases?
 
-Buying the longer-dated call => long volatility.
+The chart below calculates the value of the unexpired call with 50% volatility (up from the 30% above).  What this makes clear, is that buying the longer-dated call and selling the shorter dated makes you long volatility.  That is, you are better of if the implied volatility in the options increase.
 
 #+begin_src python :session *calendar_spreads*
 profit_1_increase_vol = [calendar_spread_1(x, 0.5) for x in range(30, 70)]
@@ -116,8 +118,9 @@ fig2.write_html("./figs/profit_vol_increase.html")
 </iframe>
 #+end_export
 
-
 ** What if volatility decreases?
+
+The chart below calculates the value of the unexpired call with 10% volatility.
 
 #+begin_src python :session *calendar_spreads*
 profit_1_decrease_vol = [calendar_spread_1(x, 0.1) for x in range(30, 70)]
@@ -141,6 +144,8 @@ fig3.write_html("./figs/profit_vol_decrease.html")
 
 
 ** Most Realistic: Taking into Account the Leverage Effect
+
+The /leverage effect/ is the observation that there is a negative correlation between a stock's price and its volatility.
 
 #+begin_src python :session *calendar_spreads*
 import numpy
