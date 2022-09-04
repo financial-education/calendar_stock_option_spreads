@@ -7,6 +7,11 @@
 Pull data from IB because we need bid/ask and not last trade.
 #+end_comment
 
+#+begin_export html
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9oykOW2NRUE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
+#+end_export
+
+
 * Calls: Sell Short-Dated and Buy Long
 
 In this type of spread we initiate positions in options which expire on

@@ -3,7 +3,7 @@
 "http://www.w3.org/TR/xhtml1/DTD/xhtml1-strict.dtd">
 <html xmlns="http://www.w3.org/1999/xhtml" lang="en" xml:lang="en">
 <head>
-<!-- 2022-09-03 Sat 13:57 -->
+<!-- 2022-09-03 Sat 20:48 -->
 <meta http-equiv="Content-Type" content="text/html;charset=utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
 <title>Calendar Stock Option Spreads Call options in spread</title>
@@ -24,21 +24,23 @@
 <h2>Table of Contents</h2>
 <div id="text-table-of-contents" role="doc-toc">
 <ul>
-<li><a href="#org190e779">1. Calls: Sell Short-Dated and Buy Long</a>
+<li><a href="#orgfddd8ec">1. Calls: Sell Short-Dated and Buy Long</a>
 <ul>
-<li><a href="#org1c16c3c">1.1. What if volatility increases?</a></li>
-<li><a href="#org0ff219c">1.2. What if volatility decreases?</a></li>
-<li><a href="#orgcb105e1">1.3. Most Realistic: Taking into Account the Leverage Effect</a></li>
-<li><a href="#orge0611dc">1.4. Leverage Effect: Larger Volatility Range</a></li>
+<li><a href="#org0f96483">1.1. What if volatility increases?</a></li>
+<li><a href="#org87e15fe">1.2. What if volatility decreases?</a></li>
+<li><a href="#orgf2b18b5">1.3. Most Realistic: Taking into Account the Leverage Effect</a></li>
+<li><a href="#orgc9ccbc6">1.4. Leverage Effect: Larger Volatility Range</a></li>
 </ul>
 </li>
-<li><a href="#org2d9e3e6">2. Buy Short-Dated and Sell Long</a></li>
+<li><a href="#org4372956">2. Buy Short-Dated and Sell Long</a></li>
 </ul>
 </div>
 </div>
+<iframe width="560" height="315" src="https://www.youtube.com/embed/9oykOW2NRUE" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowfullscreen></iframe>
 
-<div id="outline-container-org190e779" class="outline-2">
-<h2 id="org190e779"><span class="section-number-2">1.</span> Calls: Sell Short-Dated and Buy Long</h2>
+
+<div id="outline-container-orgfddd8ec" class="outline-2">
+<h2 id="orgfddd8ec"><span class="section-number-2">1.</span> Calls: Sell Short-Dated and Buy Long</h2>
 <div class="outline-text-2" id="text-1">
 <p>
 In this type of spread we initiate positions in options which expire on
@@ -167,8 +169,8 @@ This is how the calendar spread is defined in textbooks, however it is not parti
 </p>
 </div>
 
-<div id="outline-container-org1c16c3c" class="outline-3">
-<h3 id="org1c16c3c"><span class="section-number-3">1.1.</span> What if volatility increases?</h3>
+<div id="outline-container-org0f96483" class="outline-3">
+<h3 id="org0f96483"><span class="section-number-3">1.1.</span> What if volatility increases?</h3>
 <div class="outline-text-3" id="text-1-1">
 <p>
 The chart below calculates the value of the unexpired call with 50% volatility (up from the 30% above).  What this makes clear, is that buying the longer-dated call and selling the shorter dated makes you long volatility.  That is, you are better of if the implied volatility in the options increase.
@@ -192,8 +194,8 @@ fig2.write_html(<span style="color: #c3e88d;">"./figs/profit_vol_increase.html"<
 </div>
 </div>
 
-<div id="outline-container-org0ff219c" class="outline-3">
-<h3 id="org0ff219c"><span class="section-number-3">1.2.</span> What if volatility decreases?</h3>
+<div id="outline-container-org87e15fe" class="outline-3">
+<h3 id="org87e15fe"><span class="section-number-3">1.2.</span> What if volatility decreases?</h3>
 <div class="outline-text-3" id="text-1-2">
 <p>
 The chart below calculates the value of the unexpired call with 10% volatility.
@@ -218,8 +220,8 @@ fig3.write_html(<span style="color: #c3e88d;">"./figs/profit_vol_decrease.html"<
 </div>
 
 
-<div id="outline-container-orgcb105e1" class="outline-3">
-<h3 id="orgcb105e1"><span class="section-number-3">1.3.</span> Most Realistic: Taking into Account the Leverage Effect</h3>
+<div id="outline-container-orgf2b18b5" class="outline-3">
+<h3 id="orgf2b18b5"><span class="section-number-3">1.3.</span> Most Realistic: Taking into Account the Leverage Effect</h3>
 <div class="outline-text-3" id="text-1-3">
 <p>
 The <i>leverage effect</i> is the observation that there is a negative correlation between a stock's price and its volatility.
@@ -249,8 +251,8 @@ fig4.write_html(<span style="color: #c3e88d;">"./figs/profit_vol_leverage.html"<
 </div>
 
 
-<div id="outline-container-orge0611dc" class="outline-3">
-<h3 id="orge0611dc"><span class="section-number-3">1.4.</span> Leverage Effect: Larger Volatility Range</h3>
+<div id="outline-container-orgc9ccbc6" class="outline-3">
+<h3 id="orgc9ccbc6"><span class="section-number-3">1.4.</span> Leverage Effect: Larger Volatility Range</h3>
 <div class="outline-text-3" id="text-1-4">
 <p>
 Let's increase the volatility range to 90% if the stock is 30, and 10% if the stock is 70.  This will make the shape of the spread more apparent, though the ranges are not particularly realistic (though still possible).
@@ -278,8 +280,8 @@ fig5.write_html(<span style="color: #c3e88d;">"./figs/profit_vol_leverage2.html"
 </div>
 </div>
 
-<div id="outline-container-org2d9e3e6" class="outline-2">
-<h2 id="org2d9e3e6"><span class="section-number-2">2.</span> Buy Short-Dated and Sell Long</h2>
+<div id="outline-container-org4372956" class="outline-2">
+<h2 id="org4372956"><span class="section-number-2">2.</span> Buy Short-Dated and Sell Long</h2>
 <div class="outline-text-2" id="text-2">
 <p>
 Flip the charts about the x axis.  
@@ -289,7 +291,7 @@ Flip the charts about the x axis.
 </div>
 <div id="postamble" class="status">
 <p class="author">Author: Matt Brigida, Ph.D.</p>
-<p class="date">Created: 2022-09-03 Sat 13:57</p>
+<p class="date">Created: 2022-09-03 Sat 20:48</p>
 <p class="validation"><a href="https://validator.w3.org/check?uri=referer">Validate</a></p>
 </div>
 </body>
